@@ -27,33 +27,19 @@ Menu.initColumn = function() {
 		field : 'selectItem',
 		radio : true
 	}, {
-		title : '维度',
+		title : '车型',
 		field : 'name',
 		align : 'center',
 		valign : 'middle',
 		sortable : true,
-		width : '200px'
+		width : '300px'
 	}, {
-		title : '属性',
-		field : 'type',
+		title : '别名',
+		field : 'nickname',
 		align : 'center',
 		valign : 'middle',
 		sortable : true,
-		width : '200px'
-	}, {
-		title : '权重',
-		field : 'weight',
-		align : 'center',
-		valign : 'middle',
-		sortable : true,
-		width : '200px'
-	},{
-		title : '描述',
-		field : 'description',
-		align : 'center',
-		valign : 'middle',
-		sortable : true,
-		width : '200px'
+		width : '300px'
 	}, ]
 	return columns;
 };
@@ -63,7 +49,7 @@ var vm = new Vue({
 	data : {
 		showList : true,
 		title : null,
-		dimension : {
+		carmodel : {
 			parentId : 0,
 		},
 		selectId : 0,
@@ -95,7 +81,7 @@ var vm = new Vue({
 				vm.clearTreeGrid();
 				vm.treeGrid(vm.selectId);
 			} else {
-				$.get(baseURL + "dimension/listfilter/" + parentId, function(r) {
+				$.get(baseURL + "carmodel/listfilter/" + parentId, function(r) {
 					if (r) {
 						vm.dim2 = r
 						vm.selectId = parentId;
@@ -114,7 +100,7 @@ var vm = new Vue({
 			if (parentId == '全部') {
 				//TODO
 			} else {
-				$.get(baseURL + "dimension/listfilter/" + parentId, function(r) {
+				$.get(baseURL + "carmodel/listfilter/" + parentId, function(r) {
 					if (r) {
 						vm.dim3 = r
 						vm.selectId = parentId;
@@ -131,7 +117,7 @@ var vm = new Vue({
 			if (parentId == '全部') {
 				
 			} else {
-				$.get(baseURL + "dimension/listfilter/" + parentId, function(r) {
+				$.get(baseURL + "carmodel/listfilter/" + parentId, function(r) {
 					if (r) {
 						vm.dim4 = r
 						vm.selectId = parentId;
@@ -157,8 +143,8 @@ var vm = new Vue({
 	methods : {
 		treeGrid : function() {
 			var colunms = Menu.initColumn();
-			var table = new TreeTable(Menu.id, baseURL + "dimension/list/0" + this.selectId, colunms);
-			//var table = new TreeTable(Menu.id, baseURL + "dimension/list", colunms);
+			var table = new TreeTable(Menu.id, baseURL + "carmodel/list/0" + this.selectId, colunms);
+			//var table = new TreeTable(Menu.id, baseURL + "carmodel/list", colunms);
 			table.setExpandColumn(0);
 			//table.setRootCodeValue(root);
 			table.setIdField("id");
@@ -174,16 +160,16 @@ var vm = new Vue({
 		},
 		getDimData : function(parentId) {
 			//加载菜单树
-			$.get(baseURL + "dimension/listfilter/" + parentId, function(r) {
+			$.get(baseURL + "carmodel/listfilter/" + parentId, function(r) {
 				vm.dim1 = r
 			})
 		},
 		downexcel:function(){
-			location.href = baseURL + "dimension/export?selectId=" + vm.selectId+"&token=" + token;
+			location.href = baseURL + "carmodel/export?selectId=" + vm.selectId+"&token=" + token;
 		},
 		getMenu : function() {
 			//加载菜单树
-			$.get(baseURL + "dimension/list/0", function(r) {
+			$.get(baseURL + "carmodel/list/0", function(r) {
 				//添加顶级菜单
 				r.push({
 					id : 0,
@@ -192,15 +178,15 @@ var vm = new Vue({
 					open : true
 				});
 				ztree = $.fn.zTree.init($("#menuTree"), setting, r);
-				var node = ztree.getNodeByParam("id", vm.dimension.parentId);
+				var node = ztree.getNodeByParam("id", vm.carmodel.parentId);
 				ztree.selectNode(node);
-				vm.dimension.parentName = node.name;
+				vm.carmodel.parentName = node.name;
 			})
 		},
 		add : function() {
 			vm.showList = false;
 			vm.title = "新增";
-			vm.dimension = {
+			vm.carmodel = {
 				parentId : 0
 			};
 			vm.getMenu();
@@ -220,12 +206,12 @@ var vm = new Vue({
 			if (vm.validator()) {
 				return;
 			}
-			var url = vm.dimension.id == null ? "dimension/save" : "dimension/update";
+			var url = vm.carmodel.id == null ? "carmodel/save" : "carmodel/update";
 			$.ajax({
 				type : "POST",
 				url : baseURL + url,
 				contentType : "application/json",
-				data : JSON.stringify(vm.dimension),
+				data : JSON.stringify(vm.carmodel),
 				success : function(r) {
 					if (r.code === 0) {
 						alert('操作成功.', function(index) {
@@ -246,7 +232,7 @@ var vm = new Vue({
 			confirm('确定要删除选中的维度词库？', function() {
 				$.ajax({
 					type : "POST",
-					url : baseURL + "dimension/delete",
+					url : baseURL + "carmodel/delete",
 					contentType : "application/json",
 					data : JSON.stringify(id),
 					success : function(r) {
@@ -262,8 +248,8 @@ var vm = new Vue({
 			});
 		},
 		getInfo : function(id) {
-			$.get(baseURL + "dimension/info/" + id, function(r) {
-				vm.dimension = r.dimension;
+			$.get(baseURL + "carmodel/info/" + id, function(r) {
+				vm.carmodel = r.carmodel;
 				vm.getMenu();
 			});
 		},
@@ -290,25 +276,25 @@ var vm = new Vue({
 				btn1 : function(index) {
 					var node = ztree.getSelectedNodes();
 					//选择上级菜单
-					vm.dimension.parentId = node[0].id;
-					vm.dimension.parentName = node[0].name;
+					vm.carmodel.parentId = node[0].id;
+					vm.carmodel.parentName = node[0].name;
 					layer.close(index);
 				}
 			});
 		},
 		validator : function() {
-			if (isBlank(vm.dimension.parentName)) {
+			if (isBlank(vm.carmodel.parentName)) {
 				alert("维度名称不能为空");
 				return true;
 			}
-			if (isBlank(vm.dimension.name)) {
+			if (isBlank(vm.carmodel.name)) {
 				alert("上级维度不能为空");
 				return true;
 			}
 		},
 		reload : function(event) {
 			vm.showList = true;
-			Menu.table.setUrl=baseURL + "dimension/list/" + this.selectId
+			Menu.table.setUrl=baseURL + "carmodel/list/" + this.selectId
 			Menu.table.refresh();
 		},
 		

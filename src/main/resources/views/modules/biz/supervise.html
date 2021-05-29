@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>BYD</title>
+
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" href="../../css/font-awesome.min.css">
+<link rel="stylesheet" href="../../css/AdminLTE.min.css">
+<link rel="stylesheet" href="../../css/all-skins.min.css">
+<link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+<script src="../../libs/jquery.min.js"></script>
+<script src="../../libs/bootstrap.min.js"></script>
+<script src="../../plugins/daterangepicker/moment.min.js"></script>
+<script src="../../plugins/daterangepicker/daterangepicker.js"></script>
+<script src="../../libs/vue.min.js"></script>
+<script src="../../js/common.js"></script>
+<style type="text/css">
+.content  .desc {
+	display: block;
+}
+
+.content  .cont {
+	display: none;
+}
+
+.content.full .desc {
+	display: none;
+}
+
+.content.full .cont {
+	display: block;
+}
+
+.subList {
+	width: 100%;
+	height: 200px;
+	position: relative;
+}
+
+.subList .scroll {
+	overflow-y: scroll;
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: -17px;
+	bottom: 0;
+}
+
+.subList table {
+	border: 0;
+	margin: 0;
+}
+
+.subList tr td:last-child {
+	border-right: 0;
+}
+
+.subList tr td:first-child {
+	border-left: 0;
+}
+
+.subList tr {
+	height: 40px;
+}
+
+.subList tr:first-child td {
+	border-top: 0
+}
+
+.subList tr:last-child td {
+	border-bottom: 0;
+}
+</style>
+</head>
+<body>
+	<section class="content" id="rrapp">
+		<form class="form-horizontal">
+			<div class="box-body">
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-1 control-label">时间：</label>
+					<div class="col-sm-4">
+						<div class="btn-group">
+							<button type="button" class="btn btn-info">7天</button>
+							<button type="button" class="btn btn-info">30天</button>
+							<button type="button" class="btn btn-info" id="daterange-btn">
+								<span>自定义</span> <i class="fa fa-caret-down"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-1 control-label">平台：</label>
+					<div class="col-sm-4">
+						<div class="btn-group">
+							<button type="button" class="btn btn-info">爱卡</button>
+							<button type="button" class="btn btn-info">汽车之家</button>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-1 control-label">来源：</label>
+					<div class="col-sm-4">
+						<div class="btn-group">
+							<button type="button" class="btn btn-info">论坛</button>
+							<button type="button" class="btn btn-info">口碑</button>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword3" class="col-sm-1 control-label">品牌：</label>
+					<div class="col-sm-2">
+						<select class="form-control">
+							<option>全部</option>
+						</select>
+					</div>
+					<label for="inputPassword3" class="col-sm-1 control-label">车系：</label>
+					<div class="col-sm-2">
+						<select class="form-control">
+							<option>全部</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="listBox">
+			<table class="table table-bordered table-striped">
+				<tr>
+					<th width="4%">ID</th>
+					<th width="14%">原文</th>
+					<th width="9%">车系</th>
+					<th width="14%">维度</th>
+					<th width="14%">情感</th>
+					<th width="14%">句式</th>
+					<th width="14%">场景</th>
+					<th width="19%">操作</th>
+				</tr>
+				<tr class="margin">
+					<td rowspan="2" style="vertical-align: middle; text-align: center">001</td>
+					<td class="content well" colspan="7">
+						<p class="desc">宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格</p>
+						<p class="cont">宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音...</p> <a href="" class="pull-right"><i class="glyphicon glyphicon-triangle-bottom"></i> <span>展开</span></a>
+					</td>
+				</tr>
+				<tr style="overflow: hidden">
+					<td colspan="7" style="padding: 0;" valign="top">
+						<div class="subList">
+							<div class="scroll">
+								<table class="table table-bordered table-hover table-striped">
+									<tr>
+										<td>1）宋价格比唐便宜十来万块钱</td>
+										<td>比亚迪-宋</td>
+										<td>性价比-性价比-性价比-价格-配置</td>
+										<td>便宜-正面- 2-其它</td>
+										<td>对比-1</td>
+										<td>用车场景</td>
+										<td>
+											<button type="button" class="btn btn-info btn-xs">
+												<i class="glyphicon glyphicon-search"></i> 详情
+											</button>
+											<button type="button" class="btn btn-danger btn-xs">
+												<i class="glyphicon glyphicon-trash"></i> 删除
+											</button>
+											<button type="button" class="btn btn-primary btn-xs">
+												<i class="glyphicon glyphicon-plus"></i> 增加
+											</button>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<span class="scrollbar"></span>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<span class="scrollbar"></span>
+		</div>
+		</td>
+		</tr>
+		</table>
+		</div>
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="dataTables_info" id="example1_info" role="status" aria-live="polite">总计：57条记录</div>
+			</div>
+			<div class="col-sm-7">
+				<div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+					<ul class="pagination">
+						<li class="paginate_button previous disabled" id="example1_previous"><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">上一页</a></li>
+						<li class="paginate_button active"><a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li>
+						<li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0">2</a></li>
+						<li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0">3</a></li>
+						<li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0">4</a></li>
+						<li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0">5</a></li>
+						<li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0">6</a></li>
+						<li class="paginate_button next" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">下一页</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script type="text/javascript">
+		$(function() {
+
+			$('.table:eq(0) tr:eq(0) th').each(function(key, v) {
+				if (key) {
+					$('.subList tr:eq(0) td:eq(' + (key - 1) + ')').width(parseInt($(v).width()) + 2);
+				}
+			})
+			$('.table .content a').click(function(e) {
+				e.preventDefault();
+				if ($(this).parent().hasClass('full')) {
+					$(this).parent().removeClass('full');
+					$(this).find('i').removeClass('glyphicon-triangle-top').addClass('glyphicon-triangle-bottom');
+					$(this).find('span').text('展开');
+				} else {
+					$(this).parent().addClass('full');
+					$(this).find('i').removeClass('glyphicon-triangle-bottom');
+					$(this).find('i').addClass('glyphicon-triangle-top');
+					$(this).find('span').text('收起');
+				}
+			})
+		})
+	</script>
+		<script src="../../js/modules/biz/supervise.js"></script>
+</body>
+</html>

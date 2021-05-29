@@ -98,16 +98,6 @@ var vm = new Vue({
                     location.href = baseURL + 'login.html';
                 }
             });
-        },
-        donate: function () {
-            layer.open({
-                type: 2,
-                title: false,
-                area: ['806px', '467px'],
-                closeBtn: 1,
-                shadeClose: false,
-                content: ['http://cdn.renren.io/donate.jpg', 'no']
-            });
         }
 	},
 	created: function(){

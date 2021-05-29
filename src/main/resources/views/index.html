@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>快速开发平台</title>
+  <title>BYD</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
@@ -26,11 +26,11 @@
 <!-- Site wrapper -->
 <div class="wrapper" id="rrapp" v-cloak>
   <header class="main-header">
-    <a href="javascript:;" class="logo">
+    <a href="index.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>BYD</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>快速开发平台</b></span>
+      <span class="logo-lg" ><b>BYD</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
@@ -77,18 +77,18 @@
     </section>
 
     <!-- Main content -->
-    <section class="content" style="background:#fff;">
-      <iframe class="content-iframe" scrolling="yes" frameborder="0" style="width:100%;min-height:200px;overflow:visible;background:#fff;" :src="main"></iframe>
+    <section  style="background:#ecf0f5;margin:5px;padding:5px;">
+      <iframe class="content-iframe" id="iframepage" onload="this.height=this.contentWindow.document.body.scrollHeight;" style="width:100%;background:#ecf0f5;"   scrolling="no" frameborder="0"  :src="main"></iframe>
     </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
 
-  <footer class="main-footer">
-<!--     <div class="pull-right hidden-xs"> -->
-<!--       Version 1.2.0 -->
-<!--     </div> -->
-<!--     Copyright &copy; 2017 <a href="http://www.renren.io" target="_blank">renren.io</a> All Rights Reserved -->
+  <footer class="main-footer" style="margin-top: -6px;padding:5px;">
+     <div class="pull-right hidden-xs"> 
+       Version 1.0.0 
+     </div> 
+     Copyright &copy; 2017 博彦多彩</a>
   </footer>
 
   <!-- Add the sidebar's background. This div must be placed
@@ -121,7 +121,6 @@
 
 </div>
 <!-- ./wrapper -->
-
 
 <script src="libs/jquery.min.js"></script>
 <script src="plugins/jqgrid/jquery.jqGrid.min.js"></script>

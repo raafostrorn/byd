@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public interface BaseDao<T> {
 	
-	void save(T t);
+	Long save(T t);
 	
 	void save(Map<String, Object> map);
 	

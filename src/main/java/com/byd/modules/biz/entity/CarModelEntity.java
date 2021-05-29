@@ -7,14 +7,14 @@ import org.jeecgframework.poi.excel.annotation.ExcelTarget;
 
 
 /**
- * 维度词库
+ * 车型
  * 
  * @author kaiyue.cheng
  * @email 779363522@qq.com
  * @date 2017-12-22 13:58:27
  */
 @ExcelTarget("DimensionEntity")
-public class DimensionEntity implements Serializable {
+public class CarModelEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //
@@ -22,18 +22,14 @@ public class DimensionEntity implements Serializable {
     // 父菜单ID，一级菜单为0
     private Long parentId;
     // 维度名称
-    @Excel(name = "维度名称", orderNum = "1")
+    @Excel(name = "车型", orderNum = "1")
     private String name;
     // 属性
-    @Excel(name = "属性", orderNum = "1")
     private String type;
     // 描述
-    @Excel(name = "权重", orderNum = "1")
-    private Integer weight;
+    @Excel(name = "别名", orderNum = "1")
+    private String nickname;
     //
-    @Excel(name = "描述", orderNum = "1")
-    private String description;
-    
     private String linkId;
 
     private String linkName;
@@ -85,18 +81,12 @@ public class DimensionEntity implements Serializable {
         return name;
     }
 
-    /**
-     * 设置：描述
-     */
-    public void setDescription(String description) {
-        this.description = description;
+    public String getNickname() {
+        return nickname;
     }
 
-    /**
-     * 获取：描述
-     */
-    public String getDescription() {
-        return description;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getParentName() {
@@ -138,15 +128,6 @@ public class DimensionEntity implements Serializable {
     public void setLevel(Integer level) {
         this.level = level;
     }
-
-    public Integer getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Integer weight) {
-        this.weight = weight;
-    }
-
 
 
 }

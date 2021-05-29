@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.byd.common.utils.R;
-import com.byd.modules.biz.entity.DimensionEntity;
-import com.byd.modules.biz.service.DimensionService;
+import com.byd.modules.biz.entity.CarModelEntity;
+import com.byd.modules.biz.service.CarModelService;
 
 /**
  * 维度词库
@@ -25,20 +25,20 @@ import com.byd.modules.biz.service.DimensionService;
  * @date 2017-12-22 13:58:27
  */
 @RestController
-@RequestMapping("dimension")
-public class DimensionController {
+@RequestMapping("carmodel")
+public class CarModelController {
     @Autowired
-    private DimensionService dimensionService;
+    private CarModelService carModelService;
 
     /**
      * 列表
      */
     @RequestMapping("/list/{selectId}")
-    // @RequiresPermissions("dimension:list")
-    public List<DimensionEntity> listTreeGrid(@PathVariable("selectId") Long selectId) {
+    // @RequiresPermissions("carmodel:list")
+    public List<CarModelEntity> listTreeGrid(@PathVariable("selectId") Long selectId) {
         Map query = new HashMap<>();
         query.put("selectId", selectId);
-        List<DimensionEntity> list = dimensionService.queryList(query);
+        List<CarModelEntity> list = carModelService.queryList(query);
         if (list != null && list.size() > 1) {
             list.get(0).setParentId(0L);
         }
@@ -49,9 +49,9 @@ public class DimensionController {
      * 列表
      */
     @RequestMapping("/listfilter/{parentId}")
-    // @RequiresPermissions("dimension:list")
-    public List<DimensionEntity> listFilter(@PathVariable("parentId") Long parentId) {
-        List<DimensionEntity> list = dimensionService.queryListFilter(parentId);
+    // @RequiresPermissions("carmodel:list")
+    public List<CarModelEntity> listFilter(@PathVariable("parentId") Long parentId) {
+        List<CarModelEntity> list = carModelService.queryListFilter(parentId);
         return list;
     }
 
@@ -59,19 +59,19 @@ public class DimensionController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    @RequiresPermissions("dimension:info")
+    @RequiresPermissions("carmodel:info")
     public R info(@PathVariable("id") Long id) {
-        DimensionEntity dimension = dimensionService.queryObject(id);
-        return R.ok().put("dimension", dimension);
+        CarModelEntity carmodel = carModelService.queryObject(id);
+        return R.ok().put("carmodel", carmodel);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-    @RequiresPermissions("dimension:save")
-    public R save(@RequestBody DimensionEntity dimension) {
-        dimensionService.save(dimension);
+    @RequiresPermissions("carmodel:save")
+    public R save(@RequestBody CarModelEntity carmodel) {
+        carModelService.save(carmodel);
         return R.ok();
     }
 
@@ -79,9 +79,9 @@ public class DimensionController {
      * 修改
      */
     @RequestMapping("/update")
-    @RequiresPermissions("dimension:update")
-    public R update(@RequestBody DimensionEntity dimension) {
-        dimensionService.update(dimension);
+    @RequiresPermissions("carmodel:update")
+    public R update(@RequestBody CarModelEntity carmodel) {
+        carModelService.update(carmodel);
         return R.ok();
     }
 
@@ -89,9 +89,9 @@ public class DimensionController {
      * 删除
      */
     @RequestMapping("/delete")
-    @RequiresPermissions("dimension:delete")
+    @RequiresPermissions("carmodel:delete")
     public R delete(@RequestBody Long id) {
-        dimensionService.delete(id);
+        carModelService.delete(id);
         return R.ok();
     }
 
@@ -99,7 +99,7 @@ public class DimensionController {
     public void exportFeaturesByParam(Long selectId, HttpServletResponse response) {
         Map query = new HashMap<>();
         query.put("selectId", selectId);
-        dimensionService.export(query, response);
+        carModelService.export(query, response);
     }
 
 }

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.byd.modules.biz.dao.SentencePatternDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+	<resultMap type="com.byd.modules.biz.entity.SentencePatternEntity"
+		id="sentencePatternMap">
+		<result property="id" column="id" />
+		<result property="sentenceDemo" column="sentence_demo" />
+		<result property="keyWord" column="key_word" />
+		<result property="type" column="type" />
+		<result property="sentencsentenceWorth" column="sentence_worth" />
+		<result property="worth" column="worth" />
+	</resultMap>
+
+	<select id="queryAll" resultType="com.byd.modules.biz.entity.SentencePatternEntity">
+		select * from
+		tb_sentence_pattern
+	</select>
+	<select id="queryObject" resultType="com.byd.modules.biz.entity.SentencePatternEntity">
+		select * from
+		tb_sentence_pattern where id = #{value}
+	</select>
+	<select id="queryList" resultType="com.byd.modules.biz.entity.SentencePatternEntity">
+		select * from tb_sentence_pattern
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from
+		tb_sentence_pattern
+	</select>
+
+	<insert id="save" parameterType="com.byd.modules.biz.entity.SentencePatternEntity"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_sentence_pattern
+		(
+		`sentence_demo`,
+		`key_word`,
+		`type`,
+		`sentence_worth`,
+		`worth`
+		)
+		values
+		(
+		#{sentenceDemo},
+		#{keyWord},
+		#{type},
+		#{sentenceWorth},
+		#{worth}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.byd.modules.biz.entity.SentencePatternEntity">
+		update tb_sentence_pattern
+		<set>
+			<if test="sentenceDemo != null">`sentence_demo` = #{sentenceDemo}, </if>
+			<if test="keyWord != null">`key_word` = #{keyWord}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="sentenceWorth != null">`sentence_worth` = #{sentenceWorth}, </if>
+			<if test="worth != null">`worth` = #{worth}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from tb_sentence_pattern where id = #{value}
+	</delete>
+
+	<delete id="deleteBatch">
+		delete from tb_sentence_pattern where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

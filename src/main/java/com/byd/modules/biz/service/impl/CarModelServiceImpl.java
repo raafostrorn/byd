@@ -9,65 +9,65 @@ import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.byd.modules.biz.dao.DimensionDao;
-import com.byd.modules.biz.entity.DimensionEntity;
-import com.byd.modules.biz.service.DimensionService;
+import com.byd.modules.biz.dao.CarModelDao;
+import com.byd.modules.biz.entity.CarModelEntity;
+import com.byd.modules.biz.service.CarModelService;
 import com.byd.modules.biz.service.ExcelService;
 
 
 
-@Service("dimensionService")
-public class DimensionServiceImpl implements DimensionService {
+@Service("carModelService")
+public class CarModelServiceImpl implements CarModelService {
 	@Autowired
-	private DimensionDao dimensionDao;
+	private CarModelDao carModelDao;
 	
 	@Autowired
     private ExcelService excelService;
 	
 	@Override
-	public DimensionEntity queryObject(Long id){
-		return dimensionDao.queryObject(id);
+	public CarModelEntity queryObject(Long id){
+		return carModelDao.queryObject(id);
 	}
 	
 	@Override
-	public List<DimensionEntity> queryList(Map<String, Object> map){
-		return dimensionDao.queryList(map);
+	public List<CarModelEntity> queryList(Map<String, Object> map){
+		return carModelDao.queryList(map);
 	}
 	
 	@Override
 	public int queryTotal(Map<String, Object> map){
-		return dimensionDao.queryTotal(map);
+		return carModelDao.queryTotal(map);
 	}
 	
 	@Override
-	public void save(DimensionEntity dimension){
-	    DimensionEntity parentDim = this.dimensionDao.queryObject(dimension.getParentId());
-		dimensionDao.save(dimension);
+	public void save(CarModelEntity dimension){
+	    CarModelEntity parentDim = this.carModelDao.queryObject(dimension.getParentId());
+		carModelDao.save(dimension);
 		dimension.setLinkId(parentDim!=null?parentDim.getLinkId()+dimension.getId()+"-":"-"+dimension.getId()+"-");
 		dimension.setLinkName(parentDim!=null?parentDim.getLinkName()+dimension.getName()+"-":"-"+dimension.getName()+"-");
 		dimension.setLevel(parentDim!=null?parentDim.getLevel()+1:1);
 		dimension.setParentName(parentDim!=null?parentDim.getName():"");
-		dimensionDao.update(dimension);
+		carModelDao.update(dimension);
 	}
 	
 	@Override
-	public void update(DimensionEntity dimension){
-	    DimensionEntity parentDim = this.dimensionDao.queryObject(dimension.getParentId());
+	public void update(CarModelEntity dimension){
+	    CarModelEntity parentDim = this.carModelDao.queryObject(dimension.getParentId());
 	    dimension.setLinkId(parentDim!=null?parentDim.getLinkId()+dimension.getId()+"-":"-"+dimension.getId()+"-");
         dimension.setLinkName(parentDim!=null?parentDim.getLinkName()+dimension.getName()+"-":"-"+dimension.getName()+"-");
         dimension.setLevel(parentDim!=null?parentDim.getLevel()+1:1);
         dimension.setParentName(parentDim!=null?parentDim.getName():"");
-		dimensionDao.update(dimension);
+		carModelDao.update(dimension);
 	}
 	
 	@Override
 	public void delete(Long id){
-		dimensionDao.delete(id);
+		carModelDao.delete(id);
 	}
 	
 	@Override
 	public void deleteBatch(Long[] ids){
-		dimensionDao.deleteBatch(ids);
+		carModelDao.deleteBatch(ids);
 	}
 
     /**
@@ -76,8 +76,8 @@ public class DimensionServiceImpl implements DimensionService {
      * @return
      */
     @Override
-    public List<DimensionEntity> queryListFilter(Long parentId) {
-        return dimensionDao.queryListFilter(parentId);
+    public List<CarModelEntity> queryListFilter(Long parentId) {
+        return carModelDao.queryListFilter(parentId);
     }
 
     /**
@@ -87,13 +87,13 @@ public class DimensionServiceImpl implements DimensionService {
      */
     @Override
     public void export(Map query, HttpServletResponse response) {
-        List<DimensionEntity> queryList = dimensionDao.queryListTree(query);
-        for (DimensionEntity dimensionEntity : queryList) {
+        List<CarModelEntity> queryList = carModelDao.queryListTree(query);
+        for (CarModelEntity dimensionEntity : queryList) {
             dimensionEntity.setName(dim2Space(dimensionEntity.getLevel(),dimensionEntity.getName()));
         }
         response.setHeader("content-Type", "application/vnd.ms-excel");
-        response.setHeader("Content-Disposition", "attachment;filename=Dimension.xls");
-        excelService.exportExcel(new ExportParams(), DimensionEntity.class, queryList, response);
+        response.setHeader("Content-Disposition", "attachment;filename=CarModel.xls");
+        excelService.exportExcel(new ExportParams(), CarModelEntity.class, queryList, response);
     
         
     }

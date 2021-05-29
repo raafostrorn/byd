@@ -1,94 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.byd.modules.biz.dao.DimensionDao">
+<mapper namespace="com.byd.modules.biz.dao.CarModelDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.byd.modules.biz.entity.DimensionEntity" id="dimensionMap">
+    <resultMap type="com.byd.modules.biz.entity.CarModelEntity" id="carModelMap">
         <result property="id" column="id"/>
         <result property="parentId" column="parent_id"/>
         <result property="name" column="name"/>
         <result property="type" column="type"/>
-        <result property="description" column="description"/>
+        <result property="nickname" column="nickname"/>
         <result property="parentName" column="parent_name"/>
         <result property="linkId" column="link_id"/>
         <result property="linkName" column="link_name"/>
         <result property="level" column="level"/>
-        <result property="weight" column="weight"/>
     </resultMap>
 
-	<select id="queryObject" resultType="com.byd.modules.biz.entity.DimensionEntity">
-		select * from tb_dimension where id = #{value}
+	<select id="queryObject" resultType="com.byd.modules.biz.entity.CarModelEntity">
+		select * from tb_car_model where id = #{value}
 	</select>
-	<select id="queryList" resultType="com.byd.modules.biz.entity.DimensionEntity">
-		select * from tb_dimension
+	<select id="queryList" resultType="com.byd.modules.biz.entity.CarModelEntity">
+		select * from tb_car_model
 		<if test="selectId != 0">
 			where link_id like concat(concat('%-',#{selectId} ),'-%') 
 		</if>
 	</select>
 	
-	<select id="queryListTree" resultType="com.byd.modules.biz.entity.DimensionEntity">
-		select * from tb_dimension where FIND_IN_SET(id, getDimensionChild(#{selectId}));
+	<select id="queryListTree" resultType="com.byd.modules.biz.entity.CarModelEntity">
+		select * from tb_car_model where FIND_IN_SET(id, getCarModelChild(#{selectId}));
 	</select>
 	
 
-	<select id="queryListFilter"  resultType="com.byd.modules.biz.entity.DimensionEntity">
-		select * from tb_dimension where parent_id = ${value}
+	<select id="queryListFilter"  resultType="com.byd.modules.biz.entity.CarModelEntity">
+		select * from tb_car_model where parent_id = ${value}
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from tb_dimension 
+		select count(*) from tb_car_model 
 	</select>
 	 
-	<insert id="save" parameterType="com.byd.modules.biz.entity.DimensionEntity" useGeneratedKeys="true" keyProperty="id">
-		insert into tb_dimension
+	<insert id="save" parameterType="com.byd.modules.biz.entity.CarModelEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_car_model
 		(
 			`parent_id`, 
 			`name`, 
 			`type`, 
-			`description`, 
+			`nickname`, 
 			`parent_name`,
 			`link_id`,
 			`link_name`,
-			`level`,
-			`weight`
+			`level`
 		)
 		values
 		(
 			#{parentId}, 
 			#{name}, 
 			#{type}, 
-			#{description}, 
+			#{nickname}, 
 			#{parentName}, 
 			#{linkId},
 			#{linkName},
-			#{level},
-			#{weight}
+			#{level}
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.byd.modules.biz.entity.DimensionEntity">
-		update tb_dimension 
+	<update id="update" parameterType="com.byd.modules.biz.entity.CarModelEntity">
+		update tb_car_model 
 		<set>
 			<if test="name != null">`name` = #{name}, </if>
 			<if test="type != null">`type` = #{type}, </if>
-			<if test="description != null">`description` = #{description}, </if>
+			<if test="nickname != null">`nickname` = #{nickname}, </if>
 			<if test="linkId != null">`link_id` = #{linkId},</if>
 			<if test="linkName != null">`link_name` = #{linkName},</if>
 			<if test="level != null">`level` = #{level},</if>
 			<if test="parentId != null">`parent_id` = #{parentId},</if>
-			<if test="parentName != null">`parent_name` = #{parentName},</if>
-			<if test="weight != null">`weight` = #{weight}</if>
+			<if test="parentName != null">`parent_name` = #{parentName}</if>
 		</set>
 		where id = #{id}
 	</update>
 	
 	<delete id="delete">
-		delete from tb_dimension where link_id like concat(concat('%-',#{value} ),'-%') 
+		delete from tb_car_model where link_id like concat(concat('%-',#{value} ),'-%') 
 	</delete>
 	
 	<delete id="deleteBatch">
-		delete from tb_dimension where id in 
+		delete from tb_car_model where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>

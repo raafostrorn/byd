@@ -5,6 +5,8 @@ import com.byd.modules.biz.entity.DimensionEntity;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * 维度词库
  * 
@@ -27,4 +29,14 @@ public interface DimensionService {
 	void delete(Long id);
 	
 	void deleteBatch(Long[] ids);
+
+    /** 
+     * 过滤检索维度
+     * @param parentId
+     * @return
+     * @see [类、类#方法、类#成员]
+     */
+    List<DimensionEntity> queryListFilter(Long parentId);
+    
+    void export(Map query, HttpServletResponse response);
 }

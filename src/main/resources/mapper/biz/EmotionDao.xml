@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.byd.modules.biz.dao.EmotionDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.byd.modules.biz.entity.EmotionEntity" id="emotionMap">
+        <result property="id" column="id"/>
+        <result property="emotionWord" column="emotion_word"/>
+        <result property="dimensionId" column="dimension_id"/>
+        <result property="dimensionName" column="dimension_name"/>
+        <result property="worth" column="worth"/>
+        <result property="isfault" column="isfault"/>
+        <result property="emotionNickname" column="emotion_nickname"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.byd.modules.biz.entity.EmotionEntity">
+		select * from tb_emotion where id = #{value}
+	</select>
+	
+	<select id="queryAll" resultType="com.byd.modules.biz.entity.EmotionEntity">
+		select * from tb_emotion
+	</select>
+
+	<select id="queryList" resultType="com.byd.modules.biz.entity.EmotionEntity">
+		select * from tb_emotion
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_emotion 
+	</select>
+	 
+	<insert id="save" parameterType="com.byd.modules.biz.entity.EmotionEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_emotion
+		(
+			`emotion_word`, 
+			`dimension_id`, 
+			`dimension_name`, 
+			`worth`, 
+			`isfault`, 
+			`emotion_nickname`
+		)
+		values
+		(
+			#{emotionWord}, 
+			#{dimensionId}, 
+			#{dimensionName}, 
+			#{worth}, 
+			#{isfault}, 
+			#{emotionNickname}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.byd.modules.biz.entity.EmotionEntity">
+		update tb_emotion 
+		<set>
+			<if test="emotionWord != null">`emotion_word` = #{emotionWord}, </if>
+			<if test="dimensionId != null">`dimension_id` = #{dimensionId}, </if>
+			<if test="dimensionName != null">`dimension_name` = #{dimensionName}, </if>
+			<if test="worth != null">`worth` = #{worth}, </if>
+			<if test="isfault != null">`isfault` = #{isfault}, </if>
+			<if test="emotionNickname != null">`emotion_nickname` = #{emotionNickname}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from tb_emotion where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from tb_emotion where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
