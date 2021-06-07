@@ -65,9 +65,11 @@
 					</div>
 					<label for="inputPassword3" class="col-sm-2 col-md-2 control-label">属性：</label>
 					<div class="col-sm-2 col-md-2">
-						<select class="form-control"  >
-							<option>全部</option>
-						</select>
+						<input type="text" class="form-control" v-model="selected5" placeholder="属性" />
+					</div>
+					<label for="inputPassword3" class="col-sm-2 col-md-2 control-label"></label>
+					<div class="col-sm-2 col-md-2">
+						<a class="btn btn-default" @click="clearTreeGrid">查询</a> 
 					</div>
 				</div>
 			</div>

@@ -22,9 +22,14 @@
 	</select>
 	<select id="queryList" resultType="com.byd.modules.biz.entity.DimensionEntity">
 		select * from tb_dimension
-		<if test="selectId != 0">
-			where link_id like concat(concat('%-',#{selectId} ),'-%') 
-		</if>
+		<where>
+			<if test="selectId != 0">
+				link_id like concat(concat('%-',#{selectId} ),'-%') 
+			</if>
+			<if test="selectType != null">
+				and `type` like concat(concat('%',#{selectType} ),'%')
+			</if>
+		</where>
 	</select>
 	
 	<select id="queryListTree" resultType="com.byd.modules.biz.entity.DimensionEntity">

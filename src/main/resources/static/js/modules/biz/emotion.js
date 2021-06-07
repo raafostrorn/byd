@@ -1,3 +1,18 @@
+var setting = {
+	data : {
+		simpleData : {
+			enable : true,
+			idKey : "id",
+			pIdKey : "parentId",
+			rootPId : -1
+		},
+		key : {
+			url : "nourl"
+		}
+	}
+};
+var ztree;
+
 $(function () {
     $("#jqGrid").jqGrid({
         url: baseURL + 'emotion/list',
@@ -43,16 +58,30 @@ var vm = new Vue({
 	data:{
 		showList: true,
 		title: null,
+		q:{
+			emotionWord: '',
+			dimensionId: '',
+			dimensionName: '',
+			worth: '',
+        },
+//		dimension : {
+//			parentId : 0,
+//		},
 		emotion: {}
 	},
 	methods: {
 		query: function () {
+            $("#jqGrid").setGridParam({'page': 1});
 			vm.reload();
 		},
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
 			vm.emotion = {};
+			vm.emotion = {
+				dimensionId : 0
+			};
+			vm.getMenu();
 		},
 		update: function (event) {
 			var id = getSelectedRow();
@@ -68,6 +97,9 @@ var vm = new Vue({
 			location.href = baseURL + "emotion/export?token=" + token;
 		},
 		saveOrUpdate: function (event) {
+			if (vm.validator()) {
+				return;
+			}
 			var url = vm.emotion.id == null ? "emotion/save" : "emotion/update";
 			$.ajax({
 				type: "POST",
@@ -112,12 +144,77 @@ var vm = new Vue({
 		getInfo: function(id){
 			$.get(baseURL + "emotion/info/"+id, function(r){
                 vm.emotion = r.emotion;
+				vm.getMenu();
             });
+		},
+		getMenu : function() {
+			//加载菜单树
+			$.get(baseURL + "dimension/list/null/0", function(r) {
+				//添加顶级菜单
+				r.push({
+					id : 0,
+					name : "选择维度",
+					parentId : -1,
+					open : true
+				});
+				ztree = $.fn.zTree.init($("#menuTree"), setting, r);
+				var node = ztree.getNodeByParam("id", vm.emotion.dimensionId);
+				ztree.selectNode(node);
+				vm.emotion.dimensionName = node.name;
+			})
+		},
+		menuTree : function() {
+			layer.open({
+				type : 1,
+				offset : '50px',
+				skin : 'layui-layer-molv',
+				title : "选择菜单",
+				area : [ '300px', '450px' ],
+				shade : 0,
+				shadeClose : false,
+				content : jQuery("#menuLayer"),
+				btn : [ '确定', '取消' ],
+				btn1 : function(index) {
+					var node = ztree.getSelectedNodes();
+					//选择
+					vm.emotion.dimensionId = node[0].id;
+					vm.emotion.dimensionName = node[0].name;
+					layer.close(index);
+				}
+			});
+		},
+		menuTree2 : function() {
+			vm.getMenu();
+			layer.open({
+				type : 1,
+				offset : '50px',
+				skin : 'layui-layer-molv',
+				title : "选择菜单",
+				area : [ '300px', '450px' ],
+				shade : 0,
+				shadeClose : false,
+				content : jQuery("#menuLayer"),
+				btn : [ '确定', '取消' ],
+				btn1 : function(index) {
+					var node = ztree.getSelectedNodes();
+					//选择
+					vm.q.dimensionId = node[0].id;
+					vm.q.dimensionName = node[0].name;
+					layer.close(index);
+				}
+			});
+		},
+		validator : function() {
+			if (vm.emotion.dimensionId==0) {
+				alert("维度不能为空");
+				return true;
+			}
 		},
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
+                postData: vm.q,
                 page:page
             }).trigger("reloadGrid");
 		}

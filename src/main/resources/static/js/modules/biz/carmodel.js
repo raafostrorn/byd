@@ -78,15 +78,15 @@ var vm = new Vue({
 			this.dim4=[];
 			if (parentId == '全部') {
 				vm.selectId=0;
-				vm.clearTreeGrid();
-				vm.treeGrid(vm.selectId);
+//				vm.clearTreeGrid();
+//				vm.treeGrid(vm.selectId);
 			} else {
 				$.get(baseURL + "carmodel/listfilter/" + parentId, function(r) {
 					if (r) {
 						vm.dim2 = r
 						vm.selectId = parentId;
-						vm.clearTreeGrid();
-						vm.treeGrid();
+//						vm.clearTreeGrid();
+//						vm.treeGrid();
 					}
 				})
 			}
@@ -104,8 +104,8 @@ var vm = new Vue({
 					if (r) {
 						vm.dim3 = r
 						vm.selectId = parentId;
-						vm.clearTreeGrid();
-						vm.treeGrid();
+//						vm.clearTreeGrid();
+//						vm.treeGrid();
 					}
 				})
 			}
@@ -121,8 +121,8 @@ var vm = new Vue({
 					if (r) {
 						vm.dim4 = r
 						vm.selectId = parentId;
-						vm.clearTreeGrid();
-						vm.treeGrid();
+//						vm.clearTreeGrid();
+//						vm.treeGrid();
 					}
 				})
 
@@ -157,6 +157,7 @@ var vm = new Vue({
 		clearTreeGrid:function(){
 			$("div").removeClass("fixed-table-toolbar");
 			$("div").removeClass("fixed-table-container");
+			vm.treeGrid();
 		},
 		getDimData : function(parentId) {
 			//加载菜单树
@@ -283,12 +284,8 @@ var vm = new Vue({
 			});
 		},
 		validator : function() {
-			if (isBlank(vm.carmodel.parentName)) {
-				alert("维度名称不能为空");
-				return true;
-			}
 			if (isBlank(vm.carmodel.name)) {
-				alert("上级维度不能为空");
+				alert("维度名称不能为空");
 				return true;
 			}
 		},

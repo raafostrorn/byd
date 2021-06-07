@@ -75,6 +75,8 @@ var vm = new Vue({
 		selected3 : '全部',
 		dim4 : [],
 		selected4 : '全部',
+		selected5 : '',
+		selectType : 'null',
 	},
 	created : function() {
 		this.getDimData(0);
@@ -92,15 +94,15 @@ var vm = new Vue({
 			this.dim4=[];
 			if (parentId == '全部') {
 				vm.selectId=0;
-				vm.clearTreeGrid();
-				vm.treeGrid(vm.selectId);
+//				vm.clearTreeGrid();
+//				vm.treeGrid(vm.selectId);
 			} else {
 				$.get(baseURL + "dimension/listfilter/" + parentId, function(r) {
 					if (r) {
 						vm.dim2 = r
 						vm.selectId = parentId;
-						vm.clearTreeGrid();
-						vm.treeGrid();
+//						vm.clearTreeGrid();
+//						vm.treeGrid();
 					}
 				})
 			}
@@ -118,8 +120,8 @@ var vm = new Vue({
 					if (r) {
 						vm.dim3 = r
 						vm.selectId = parentId;
-						vm.clearTreeGrid();
-						vm.treeGrid();
+//						vm.clearTreeGrid();
+//						vm.treeGrid();
 					}
 				})
 			}
@@ -135,8 +137,8 @@ var vm = new Vue({
 					if (r) {
 						vm.dim4 = r
 						vm.selectId = parentId;
-						vm.clearTreeGrid();
-						vm.treeGrid();
+//						vm.clearTreeGrid();
+//						vm.treeGrid();
 					}
 				})
 
@@ -148,16 +150,22 @@ var vm = new Vue({
 				this.selected4 = '全部';
 			} else {
 				vm.selectId = parentId;
-				vm.clearTreeGrid();
-				vm.treeGrid();
+//				vm.clearTreeGrid();
+//				vm.treeGrid();
 			}
-
+		},
+		selected5 : function(parentId, oldVal) {
+			if (this.selected5 !== null && this.selected5 !== undefined && this.selected5 !== '') {
+				this.selectType = this.selected5;
+			}else{
+				this.selectType = 'null';
+			}
 		}
 	},
 	methods : {
 		treeGrid : function() {
 			var colunms = Menu.initColumn();
-			var table = new TreeTable(Menu.id, baseURL + "dimension/list/0" + this.selectId, colunms);
+			var table = new TreeTable(Menu.id, baseURL + "dimension/list/"+this.selectType+"/0" + this.selectId, colunms);
 			//var table = new TreeTable(Menu.id, baseURL + "dimension/list", colunms);
 			table.setExpandColumn(0);
 			//table.setRootCodeValue(root);
@@ -171,6 +179,7 @@ var vm = new Vue({
 		clearTreeGrid:function(){
 			$("div").removeClass("fixed-table-toolbar");
 			$("div").removeClass("fixed-table-container");
+			vm.treeGrid();
 		},
 		getDimData : function(parentId) {
 			//加载菜单树
@@ -183,7 +192,7 @@ var vm = new Vue({
 		},
 		getMenu : function() {
 			//加载菜单树
-			$.get(baseURL + "dimension/list/0", function(r) {
+			$.get(baseURL + "dimension/list/null/0", function(r) {
 				//添加顶级菜单
 				r.push({
 					id : 0,
@@ -297,18 +306,14 @@ var vm = new Vue({
 			});
 		},
 		validator : function() {
-			if (isBlank(vm.dimension.parentName)) {
-				alert("维度名称不能为空");
-				return true;
-			}
 			if (isBlank(vm.dimension.name)) {
-				alert("上级维度不能为空");
+				alert("维度名称不能为空");
 				return true;
 			}
 		},
 		reload : function(event) {
 			vm.showList = true;
-			Menu.table.setUrl=baseURL + "dimension/list/" + this.selectId
+			Menu.table.setUrl=baseURL + "dimension/list/null/" + this.selectId
 			Menu.table.refresh();
 		},
 		

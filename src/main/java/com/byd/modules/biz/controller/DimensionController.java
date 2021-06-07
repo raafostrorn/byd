@@ -33,10 +33,13 @@ public class DimensionController {
     /**
      * 列表
      */
-    @RequestMapping("/list/{selectId}")
+    @RequestMapping("/list/{selectType}/{selectId}")
     // @RequiresPermissions("dimension:list")
-    public List<DimensionEntity> listTreeGrid(@PathVariable("selectId") Long selectId) {
-        Map query = new HashMap<>();
+    public List<DimensionEntity> listTreeGrid(@PathVariable("selectType") String selectType,@PathVariable("selectId") Long selectId) {
+    	Map<String, Object> query = new HashMap<>();
+    	if (!selectType.equals("null")) {
+            query.put("selectType", selectType);
+		}
         query.put("selectId", selectId);
         List<DimensionEntity> list = dimensionService.queryList(query);
         if (list != null && list.size() > 1) {

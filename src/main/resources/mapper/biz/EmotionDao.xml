@@ -24,6 +24,17 @@
 
 	<select id="queryList" resultType="com.byd.modules.biz.entity.EmotionEntity">
 		select * from tb_emotion
+		<where>
+			<if test="emotionWord != null and emotionWord.trim() != ''">
+				and emotion_word = #{emotionWord}
+			</if>
+			<if test="dimensionId != null and dimensionId.trim() != ''">
+				and dimension_id = #{dimensionId}
+			</if>
+			<if test="worth != null and worth.trim() != ''">
+				and worth = #{worth}
+			</if>
+		</where>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -39,6 +50,17 @@
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from tb_emotion 
+		<where>
+			<if test="emotionWord != null and emotionWord.trim() != ''">
+				and emotion_word = #{emotionWord}
+			</if>
+			<if test="dimensionId != null and dimensionId.trim() != ''">
+				and dimension_id = #{dimensionId}
+			</if>
+			<if test="worth != null and worth.trim() != ''">
+				and worth = #{worth}
+			</if>
+		</where>
 	</select>
 	 
 	<insert id="save" parameterType="com.byd.modules.biz.entity.EmotionEntity" useGeneratedKeys="true" keyProperty="id">
