@@ -23,6 +23,7 @@ import java.util.List;
  * @since [产品/模块版本]
  */
 public class SuperviseEntity {
+    private String id;
     private String website;
     private String bbs_name;
     private String car_series;
@@ -36,6 +37,14 @@ public class SuperviseEntity {
     private String thread_url;
     private String create_date;
     private List<SuperviseSubEntity> result = new ArrayList<SuperviseSubEntity>();
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getWebsite() {
         return website;

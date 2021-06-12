@@ -4,7 +4,9 @@ var vm = new Vue({
 	data:{
 		showList: true,
 		title: null,
-		superviseList: []
+		showList : true,
+		superviseList: [],
+		supervise:{}
 	},
 	created : function() {
 		this.queryPage();
@@ -27,6 +29,13 @@ var vm = new Vue({
 				}
 			});
 		},
+		reload:function(){
+			vm.showList=true
+		},
+		addNew: function(id){
+			vm.showList = false;
+			vm.title = "新增";
+		},
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
@@ -39,8 +48,12 @@ var vm = new Vue({
 			}
 			vm.showList = false;
             vm.title = "修改";
-            
             vm.getInfo(id)
+		},
+		getInfo : function(id) {
+			$.get(baseURL + "supervise/info?docid=" + id, function(r) {
+				vm.supervise = r.supervise;
+			});
 		},
 		saveOrUpdate: function (event) {
 			var url = vm.sentencePattern.id == null ? "sentencepattern/save" : "sentencepattern/update";
@@ -72,79 +85,49 @@ var vm = new Vue({
 var variantItem = Vue.extend({
 	name : 'variant-item',
 	props : {
-		item : {}
+		item : {},
+		index : ''
 	},
 	template : [ 
-'<div class="row h-2">',
-'<div class="col-md-1 h-5">001</div>',
-'<div class="content  col-md-11 h-0">',
-	'<div class="row h-3 w-2">',
-		'<div class="col-md-10">',
-			'<p class="desc">宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格</p>',
-			'<p class="cont">宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音宋价格比唐便宜十来万块钱，宋的乘坐空间大，没有噪音...</p>',
-			'<a href="" class="pull-right"><i class="glyphicon glyphicon-triangle-bottom"></i> <span>展开</span></a>',
+	'<div class="row h-2">',
+	'<div class="col-md-1 h-5">{{ index+1 }}</div>',
+	'<div class="content  col-md-11 h-0">',
+		'<div class="row h-3 w-2">',
+			'<div class="col-md-10">',
+				'<p class="desc">{{item.thread_context}}</p>',
+				'<p class="cont">{{item.thread_context}}</p>',
+				'<a href="" class="pull-right"><i class="glyphicon glyphicon-triangle-bottom"></i> <span>展开</span></a>',
+			'</div>',
+			'<div class="col-md-2">',
+				'<button type="button" onclick="addNew(this)" :docid="item.id" class="btn btn-primary btn-xs">',
+					'<i class="glyphicon glyphicon-plus"></i> 新增',
+				'</button>',
+			'</div>',
 		'</div>',
-		'<div class="col-md-2">',
-			'<button type="button" class="btn btn-primary btn-xs">',
-				'<i class="glyphicon glyphicon-plus"></i> 增',
-			'</button>',
-		'</div>',
-	'</div>',
-	'<div class="row h-1 w-1">',
-		'<div class="col-md-2">1）宋价格比唐便宜十来万块钱</div>',
-		'<div class="col-md-1">比亚迪-宋</div>',
-		'<div class="col-md-2">性价比-性价比-性价比-价格-配置</div>',
-		'<div class="col-md-2">便宜-正面- 2-其它</div>',
-		'<div class="col-md-1">对比-1</div>',
-		'<div class="col-md-2">用车场景</div>',
-		'<div class="col-md-2">',
-			'<button type="button" class="btn btn-info btn-xs">详</button>',
-			'<button type="button" class="btn btn-danger btn-xs">删</button>',
-			'<button type="button" class="btn btn-primary btn-xs">改</button>',
-		'</div>',
-	'</div>',
-	'<div class="row h-1 w-1">',
-		'<div class="col-md-2">1）宋价格比唐便宜十来万块钱</div>',
-		'<div class="col-md-1">比亚迪-宋</div>',
-		'<div class="col-md-2">性价比-性价比-性价比-价格-配置</div>',
-		'<div class="col-md-2">便宜-正面- 2-其它</div>',
-		'<div class="col-md-1">对比-1</div>',
-		'<div class="col-md-1">用车场景</div>',
-		'<div class="col-md-3">',
-			'<button type="button" class="btn btn-info btn-xs">详</button>',
-			'<button type="button" class="btn btn-danger btn-xs">删</button>',
-			'<button type="button" class="btn btn-primary btn-xs">改</button>',
+		'<div class="row h-1 w-1" v-for="(tab,index) in item.result" >',
+			'<div class="col-md-2">1</div>',
+			'<div class="col-md-1">比亚迪-宋</div>',
+			'<div class="col-md-2">性价比-性价比-性价比-价格-配置</div>',
+			'<div class="col-md-2">便宜-正面- 2-其它</div>',
+			'<div class="col-md-1">对比-1</div>',
+			'<div class="col-md-2">用车场景</div>',
+			'<div class="col-md-2">',
+				'<button type="button" class="btn btn-info btn-xs">详</button>&nbsp;',
+				'<button type="button" class="btn btn-danger btn-xs">删</button>&nbsp;',
+				'<button type="button" class="btn btn-primary btn-xs">增</button>',
+			'</div>',
 		'</div>',
 	'</div>',
-	'<div class="row h-1 w-1">',
-		'<div class="col-md-2">1）宋价格比唐便宜十来万块钱</div>',
-		'<div class="col-md-1">比亚迪-宋</div>',
-		'<div class="col-md-2">性价比-性价比-性价比-价格-配置</div>',
-		'<div class="col-md-2">便宜-正面- 2-其它</div>',
-		'<div class="col-md-1">对比-1</div>',
-		'<div class="col-md-1">用车场景</div>',
-		'<div class="col-md-3">',
-			'<button type="button" class="btn btn-info btn-xs">详</button>',
-			'<button type="button" class="btn btn-danger btn-xs">删</button>',
-			'<button type="button" class="btn btn-primary btn-xs">改</button>',
-		'</div>',
-	'</div>',
-	'<div class="row h-1 w-1">',
-		'<div class="col-md-2">1）宋价格比唐便宜十来万块钱</div>',
-		'<div class="col-md-1">比亚迪-宋</div>',
-		'<div class="col-md-2">性价比-性价比-性价比-价格-配置</div>',
-		'<div class="col-md-2">便宜-正面- 2-其它</div>',
-		'<div class="col-md-1">对比-1</div>',
-		'<div class="col-md-1">用车场景</div>',
-		'<div class="col-md-3">',
-			'<button type="button" class="btn btn-info btn-xs">详</button>',
-			'<button type="button" class="btn btn-danger btn-xs">删</button>',
-			'<button type="button" class="btn btn-primary btn-xs">改</button>',
-		'</div>',
-	'</div>',
-'</div>',
-'</div>'].join('')
+	'</div>'].join('')
 });
 
 //注册菜单组件
 Vue.component('variantItem', variantItem);
+
+
+function addNew(cur) {
+	vm.getInfo($(cur).attr("docid"))
+	vm.title="新增";
+	vm.showList=false;
+	console.log(vm.supervise);
+}

@@ -18,4 +18,13 @@ public interface SuperviseService {
      * @see [类、类#方法、类#成员]
      */
     List<SuperviseEntity> queryList(Map<String, Object> params);
+
+    /** 
+     * <一句话功能简述>
+     * <功能详细描述>
+     * @param id
+     * @return
+     * @see [类、类#方法、类#成员]
+     */
+    SuperviseEntity queryObject(String id);
 }

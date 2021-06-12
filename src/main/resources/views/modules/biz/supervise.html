@@ -21,6 +21,7 @@
 
 .listBox .content {
 	padding: 0;
+	min-height:10px;
 }
 
 .listBox .content  .desc {
@@ -56,16 +57,16 @@
 	height: 40px;
 }
 
-.h-2>div {
+/* .h-2>div {
 	min-height: 215px;
-}
+} 
 
 .h-2>div:first-child {
 	line-height: 200px;
-}
+}*/
 
 .h-3>div {
-	min-height: 30px;
+	min-height: 55px;
 }
 
 .content  .cont {
@@ -120,7 +121,8 @@
 </style>
 </head>
 <body>
-	<section class="content" id="rrapp">
+	<section class="content" id="rrapp" v-cloak>
+	<div v-show="showList" >
 		<form class="form-horizontal">
 			<div class="box-body">
 				<div class="form-group">
@@ -186,12 +188,6 @@
 				<variant-item :item="item" :index="index" v-for="(item,index) in superviseList"></variant-item>
 			</div>
 		</div>
-		<span class="scrollbar"></span>
-		</div>
-		</td>
-		</tr>
-		</table>
-		</div>
 		<div class="row">
 			<div class="col-sm-5">
 				<div class="dataTables_info" id="example1_info" role="status" aria-live="polite">总计：57条记录</div>
@@ -211,46 +207,189 @@
 				</div>
 			</div>
 		</div>
+		</div>
+		<div v-show="!showList" class="panel panel-default">
+			<div class="panel-heading">{{title}}</div>
+			<form class="form-horizontal" style="padding:10px;">
+				<br/>
+				<div class="form-group">
+					<div class="col-sm-1 control-label">原文</div>
+					<div class="col-sm-11">
+						<textarea class="form-control" rows="4"  placeholder="原文" ></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-1 control-label">观点</div>
+					<div class="col-sm-11">
+						<textarea class="form-control" rows="1"  placeholder="观点,必填" ></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-1 control-label">品牌</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="品牌" />
+					</div>
+					<div class="col-sm-1 control-label">系列</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="系列" />
+					</div>
+					<div class="col-sm-1 control-label">型号</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="型号" />
+					</div>
+					<div class="col-sm-1 control-label">别名</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="别名" />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-1 control-label">一级维度</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="一级维度" />
+					</div>
+					<div class="col-sm-1 control-label">二级维度</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="二级维度" />
+					</div>
+					<div class="col-sm-1 control-label">三级维度</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="三级维度" />
+					</div>
+					<div class="col-sm-1 control-label">四级维度</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="四级维度" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-1 control-label">维度描述</div>
+					<div class="col-sm-5">
+						<textarea class="form-control"   placeholder="情感描述" ></textarea>
+					</div>
+					<div class="col-sm-1 control-label">维度属性</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="维度属性" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-1 control-label">情感</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="情感" />
+					</div>
+					<div class="col-sm-1 control-label">极性值</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="极性值" />
+					</div>
+					<div class="col-sm-1 control-label">情感词</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="情感词" />
+					</div>
+					<div class="col-sm-1 control-label">情感属性</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="情感属性" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-1 control-label">情感描述</div>
+					<div class="col-sm-5">
+						<textarea class="form-control"   placeholder="情感描述" ></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-1 control-label">句式分类</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="句式分类" />
+					</div>
+					<div class="col-sm-1 control-label">饱和度</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="饱和度" />
+					</div>
+					<div class="col-sm-1 control-label">关键词</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="关键词" />
+					</div>
+					<div class="col-sm-1 control-label">句式模式</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="句式模式" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-1 control-label">场景分类</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="场景分类" />
+					</div>
+					<div class="col-sm-1 control-label">购车场景</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="购车场景" />
+					</div>
+					<div class="col-sm-1 control-label">关键词</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="关键词" />
+					</div>
+					<div class="col-sm-1 control-label">句式模式</div>
+					<div class="col-sm-2">
+						<input type="text" class="form-control"  placeholder="句式模式" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-5 control-label"></div>
+					<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定" /> &nbsp;&nbsp; <input type="button" class="btn btn-warning" @click="reload" value="返回" />
+				</div>
+			</form>
+		</div>
+	</div>
 	</section>
 	<script type="text/javascript">
-		$(function() {
+	$(function() {
+        
+        
+        setTimeout(function(){var height3 = $('.h-3').height();
+        var height0 = $('.h-0').height();$('.h-3>div:last-child').height(height3 - 1);
+        $('.h-0').siblings().height(height0).css('line-height',height0+'px');}, 10)
+        
 
-			var height3 = $('.h-3').height();
+        $(".listBox").delegate("a.pull-right","click",function(e){
 
-			$('.h-3>div:last-child').height(height3 - 1);
-			$(".listBox").delegate("a.pull-right","click",function(e){
-			 /* $(document).on('click','.listBox .pullright',function(e) { 
-				alert(1) */
+            if ($(this).parent().hasClass('full')) {
 
-				if ($(this).parent().hasClass('full')) {
+                $(this).parent().removeClass('full');
+                $(this).find('i').removeClass('glyphicon-triangle-top').addClass('glyphicon-triangle-bottom');
+                $(this).find('span').text('展开');
 
-					$(this).parent().removeClass('full');
-					$(this).find('i').removeClass('glyphicon-triangle-top').addClass('glyphicon-triangle-bottom');
-					$(this).find('span').text('展开');
-					var height3 = $('.h-3>div:first-child').height();
+                var $this=$(this);
+                setTimeout(function() {
+                    var Parent3=$this.parent();
+                    var Parent2=$this.parent().parent().parent();
 
-					$('.h-3>div:last-child').height(height3 - 1);
-					setTimeout(function() {
-						var height0 = $('.h-0').height();
-						$('.h-5').height(height0).css('line-height', height0 + 'px');
+                    var height3 = Parent3.height();
+                    Parent3.siblings().height(height3 - 1);
+                    setTimeout(function(){
+                        var height0 = Parent2.height();
+                        Parent2.siblings().height(height0).css('line-height', height0 + 'px');
+                    })
+                }, 0);
+            } else {
 
-					}, 50);
-				} else {
+                $(this).parent().addClass('full');
+                $(this).find('i').removeClass('glyphicon-triangle-bottom');
+                $(this).find('i').addClass('glyphicon-triangle-top');
+                $(this).find('span').text('收起');
+                var $this=$(this);
+                setTimeout(function() {
+                    var Parent1=$this.parent().parent();
+                    var Parent2=$this.parent().parent().parent();
 
-					$(this).parent().addClass('full');
-					$(this).find('i').removeClass('glyphicon-triangle-bottom');
-					$(this).find('i').addClass('glyphicon-triangle-top');
-					$(this).find('span').text('收起');
-					var height0 = $('.h-0').height();
-					var height3 = $('.h-3').height();
+                    var height3 = Parent1.height();
+                    var height0 = Parent2.height();
+                   
+                    Parent2.siblings().height(height0).css('line-height', height0 + 'px');
+                    Parent1.children('div:last-child').height(height3 - 1);
+                }, 0);
 
-					$('.h-3>div:last-child').height(height3 - 1);
-					$('.h-5').height(height0).css('line-height', height0 + 'px');
-
-				}
-				e.preventDefault();
-			})
-		})
+            }
+            e.preventDefault();
+        })
+    })
 	</script>
 	<script src="../../js/modules/biz/supervise.js"></script>
 </body>
