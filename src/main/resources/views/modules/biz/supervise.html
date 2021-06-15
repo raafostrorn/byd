@@ -110,7 +110,7 @@
 
 .w-2>div:nth-child(2) button {
 	position: absolute;
-	top: 48%;
+	top: 30%;
 	left: 50%;
 	margin-left: -20px;
 }
@@ -212,16 +212,17 @@
 			<div class="panel-heading">{{title}}</div>
 			<form class="form-horizontal" style="padding:10px;">
 				<br/>
+				<input type="hidden" class="form-control" v-model="supervise.id"  placeholder="品牌" />
 				<div class="form-group">
 					<div class="col-sm-1 control-label">原文</div>
 					<div class="col-sm-11">
-						<textarea class="form-control" rows="4"  placeholder="原文" ></textarea>
+						<textarea class="form-control" rows="4" v-model="supervise.thread_context" disabled=disabled  placeholder="原文" ></textarea>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-1 control-label">观点</div>
 					<div class="col-sm-11">
-						<textarea class="form-control" rows="1"  placeholder="观点,必填" ></textarea>
+						<textarea class="form-control" rows="1"  placeholder="观点" ></textarea>
 					</div>
 				</div>
 				<div class="form-group">
@@ -340,7 +341,72 @@
 	</div>
 	</section>
 	<script type="text/javascript">
-	$(function() {
+	
+	   $(function() {
+           setTimeout(function(){
+               var height3 = $('.h-3').height();
+               var height0 = $('.h-0').height();
+               var flag=215;
+               
+               $('.h-3>div:last-child').height(height3 - 1);
+               $('.h-0').siblings().height(height0).css('line-height',height0+'px');
+
+               
+               $('.h-0').each(function(i){
+                   var length1=$(this).children().length;
+                   if(length1>6){
+                       $(this).height(flag).css('overflow','auto');
+                       $(this).siblings().height(flag);
+                   }
+               });               
+
+           },10)
+
+           $(".listBox").delegate("a.pull-right","click",function(e){
+
+               if ($(this).parent().hasClass('full')) {
+
+                   $(this).parent().removeClass('full');
+                   $(this).find('i').removeClass('glyphicon-triangle-top').addClass('glyphicon-triangle-bottom');
+                   $(this).find('span').text('展开');
+
+                   var $this=$(this);
+                   setTimeout(function() {
+                       var Parent3=$this.parent();
+                       var Parent2=$this.parent().parent().parent();
+
+                       var height3 = Parent3.height();
+                       Parent3.siblings().height(height3 - 1);
+                       setTimeout(function(){
+                           var height0 = Parent2.height();
+                           Parent2.siblings().height(height0).css('line-height', height0 + 'px');
+                       })
+                   }, 0);
+               } else {
+
+                   $(this).parent().addClass('full');
+                   $(this).find('i').removeClass('glyphicon-triangle-bottom');
+                   $(this).find('i').addClass('glyphicon-triangle-top');
+                   $(this).find('span').text('收起');
+                   var $this=$(this);
+                   setTimeout(function() {
+                       var Parent1=$this.parent().parent();
+                       var Parent2=$this.parent().parent().parent();
+
+                       var height3 = Parent1.height();
+                       var height0 = Parent2.height();
+                      
+                       Parent2.siblings().height(height0).css('line-height', height0 + 'px');
+                       Parent1.children('div:last-child').height(height3 - 1);
+                   }, 0);
+
+               }
+               e.preventDefault();
+           })
+       })
+	
+	
+/* 	$(function() {
         
         
         setTimeout(function(){var height3 = $('.h-3').height();
@@ -389,7 +455,7 @@
             }
             e.preventDefault();
         })
-    })
+    }) */
 	</script>
 	<script src="../../js/modules/biz/supervise.js"></script>
 </body>

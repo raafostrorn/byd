@@ -53,15 +53,15 @@ var vm = new Vue({
 		getInfo : function(id) {
 			$.get(baseURL + "supervise/info?docid=" + id, function(r) {
 				vm.supervise = r.supervise;
+				console.log(vm.supervise);
 			});
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.sentencePattern.id == null ? "sentencepattern/save" : "sentencepattern/update";
 			$.ajax({
 				type: "POST",
-			    url: baseURL + url,
+			    url: baseURL + "supervise/update",
                 contentType: "application/json",
-			    data: JSON.stringify(vm.sentencePattern),
+			    data: JSON.stringify(vm.supervise),
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){
@@ -110,7 +110,7 @@ var variantItem = Vue.extend({
 			'<div class="col-md-2">性价比-性价比-性价比-价格-配置</div>',
 			'<div class="col-md-2">便宜-正面- 2-其它</div>',
 			'<div class="col-md-1">对比-1</div>',
-			'<div class="col-md-2">用车场景</div>',
+			'<div class="col-md-2">用车景</div>',
 			'<div class="col-md-2">',
 				'<button type="button" class="btn btn-info btn-xs">详</button>&nbsp;',
 				'<button type="button" class="btn btn-danger btn-xs">删</button>&nbsp;',
@@ -129,5 +129,4 @@ function addNew(cur) {
 	vm.getInfo($(cur).attr("docid"))
 	vm.title="新增";
 	vm.showList=false;
-	console.log(vm.supervise);
 }
